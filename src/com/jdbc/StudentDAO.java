@@ -71,8 +71,107 @@ public class StudentDAO {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		finally {
+
+			try {
+				if(stmt != null) {
+					stmt.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+				if(res != null) {
+					res.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
 		
 	}
+	
+	public void updateMarks(int id , double marks){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			 con = DBConnection.getConnection();
+			 String query = "UPDATE students SET marks =? WHERE id =?";
+			 pstmt = con.prepareStatement(query);
+			 pstmt.setDouble(1, marks);
+			 pstmt.setInt(2, id);
+			 
+			 int res = pstmt.executeUpdate();
+			 if(res > 0) {
+				 System.out.println("Marks Updated Successfully..!");
+			 }else {
+				 System.out.println("Student is not found");
+			 }
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		
+	}
+	
+	public void deleteStudent(int id){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			 con = DBConnection.getConnection();
+			 String query = "DELETE FROM students WHERE id=?";
+			 pstmt = con.prepareStatement(query);
+			 pstmt.setInt(1, id);
+			 pstmt.executeUpdate();
+			 System.out.println("Student is Deleted Successfully..!");
+			 
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+	}
+	
+	
+	
+	
+	
 	
 	
 	
